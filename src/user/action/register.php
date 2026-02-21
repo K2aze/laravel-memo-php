@@ -96,5 +96,5 @@ try {
 }
 
 // メモ投稿画面にリダイレクト
-header("Location: ../../memo/");
+header("Location: ../../login/");
 exit();
