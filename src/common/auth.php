@@ -25,7 +25,7 @@ function getLoginUserName()
     $name = $_SESSION["user"]["name"];
 
     if (7 < mb_strlen($name)) {
-      $name = mb_substr($name, 0, 7) . "...";
+      $name = mb_substr($name, 0, 7);
     }
 
     return $name;

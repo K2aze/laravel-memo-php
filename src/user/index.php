@@ -11,60 +11,57 @@
     echo getHeader("ユーザー登録");
     ?>
     <body>
-        <div class="d-flex align-items-center justify-content-center h-100">
-            <form method="post" action="./action/register.php">
-                <div class="card rounded login-card-width shadow">
-                    <div class="card-body">
-                      <?php if (isset($_SESSION["errors"])) {
-                        echo '<div class="alert alert-danger" role="alert">';
-                        foreach ($_SESSION["errors"] as $error) {
-                          echo "<div>{$error}</div>";
-                        }
-                        echo "</div>";
-                        unset($_SESSION["errors"]);
-                      } ?>
-                        <div class="rounded-circle mx-auto border-gray border d-flex mt-3 icon-circle">
-                            <img src="../public/images/animal_stand_zou.png" class="w-75 mx-auto p-2" alt="icon"/>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="mt-3 h2">SimpleMemo</div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="offset-2 col-8 offset-2">
-                                <label class="input-group w-100">
-                                    <span class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-file-signature"></i></span>
-                                    </span>
-                                    <input type="text" name="user_name" class="form-control" placeholder="ユーザー名" autocomplete="off" maxlength="255" />
-                                </label>
-                                <label class="input-group w-100">
-                                    <span class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-envelope"></i></span>
-                                    </span>
-                                    <input type="text" name="user_email" class="form-control" placeholder="メールアドレス" autocomplete="off" maxlength="255" />
-                                </label>
-                                <label class="input-group w-100">
-                                    <span class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                    </span>
-                                    <input type="password" name="user_password" class="form-control" placeholder="パスワード" autocomplete="off" maxlength="255" />
-                                </label>
-                                <button type="submit" class="form-control btn btn-success">
-                                    登録する
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mt-5">
-                            <div class="d-flex justify-content-center">
-                              すでにアカウントをお持ちですか？
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <a href="../login/" class="text-success">ログイン</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+      <main class="auth">
+        <div class="main">
+
+          <div class="image-container">
+            <img src="../public/images/animal_stand_zou.png" class="image" alt="logo"/>
+          </div>
+
+          <form method="post" action="./action/register.php" class="form">
+
+            <h1 class="title">SimpleMemo</h1>
+
+            <?php if (isset($_SESSION["errors"])) {
+              echo '<p role="alert" class="validation-error">';
+              foreach ($_SESSION["errors"] as $error) {
+                echo "<span class='error'>{$error}</span>";
+              }
+              echo "</p>";
+              unset($_SESSION["errors"]);
+            } ?>
+
+            <div class="field">
+              <label class="label" for="username">ユーザー名</label>
+              <input type="text" id="username" name="user_name" class="input" placeholder="ユーザー名" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label class="label" for="email">メールアドレス</label>
+              <input type="email" id="email" name="user_email" class="input" placeholder="メールアドレス" autocomplete="off" />
+            </div>
+
+            <div class="field">
+              <label class="label" for="password">パスワード</label>
+              <input type="password" id="password" name="user_password" class="input" placeholder="パスワード" autocomplete="off" />
+            </div>
+
+            <button type="submit" class="btn btn-submit">
+                ログイン
+            </button>
+
+          </form>
+
+          <p class="anchor">
+            <span>
+              アカウントをお持ちではありませんか？
+            </span>
+            <a href="../login/" class="text-success">アカウントを作成</a>
+          </p>
+
         </div>
+
+      </main>
+
     </body>
 </html>

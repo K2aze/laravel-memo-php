@@ -40,90 +40,153 @@
       $edit_content = $edit_memo["content"] ?? "";
     }
     ?>
-    <body class="bg-white">
-        <div class="h-100">
-            <div class="row h-100 m-0 p-0">
-                <div class="col-3 h-100 m-0 p-0 border-left border-right border-gray">
-                    <div class="left-memo-menu d-flex justify-content-between pt-2">
-                        <div class="pl-3 pt-2">
-                          <?php echo $user_name; ?>さん、こんにちは。
-                        </div>
-                        <div class="pr-1">
-                            <a href="./action/add.php" class="btn btn-success"><i class="fas fa-plus"></i></a>
-                            <a href="./action/logout.php" class="btn btn-dark"><i class="fas fa-sign-out-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="left-memo-title h3 pl-3 pt-3">
-                        メモリスト
-                    </div>
-                    <div class="left-memo-list list-group-flush p-0">
-                      <?php if (empty($memos)): ?>
-                             <div class="pl-3 pt-3 h5 text-info text-center">
-                                 <i class="far fa-surprise"></i>メモがありません。
-                             </div>
-                         <?php endif; ?>
+    <body>
 
-                         <?php foreach ($memos as $memo): ?>
-                             <a href="./action/select.php?id=<?php echo $memo[
-                               "id"
-                             ]; ?>"
-                                class="list-group-item list-group-item-action <?php echo $edit_id ==
-                                $memo["id"]
-                                  ? "active"
-                                  : ""; ?>">
-                                 <div class="d-flex w-100 justify-content-between">
-                                     <h5 class="mb-1"><?php echo $memo[
-                                       "title"
-                                     ]; ?></h5>
-                                     <small><?php echo date(
-                                       "Y/m/d H:i",
-                                       strtotime($memo["updated_at"]),
-                                     ); ?></small>
-                                 </div>
-                                 <p class="mb-1">
-                                     <?php echo mb_strlen($memo["content"]) <=
-                                     100
-                                       ? $memo["content"]
-                                       : mb_substr($memo["content"], 0, 100) .
-                                         "..."; ?>
-                                 </p>
-                             </a>
-                         <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="col-9 h-100">
-                  <?php if (isset($_SESSION["select_memo"])): ?>
-                          <form class="w-100 h-100" method="post">
-                              <input type="hidden" name="edit_id" value="<?php echo $edit_id; ?>" />
-                              <div id="memo-menu">
-                                  <button type="submit" class="btn btn-danger" formaction="./action/delete.php">
-                                      <i class="fas fa-trash-alt"></i>
-                                  </button>
-                                  <button type="submit" class="btn btn-success" formaction="./action/update.php">
-                                      <i class="fas fa-save"></i>
-                                  </button>
-                              </div>
-                              <input
-                                  type="text"
-                                  id="memo-title"
-                                  name="edit_title"
-                                  placeholder="タイトルを入力する..."
-                                  value="<?php echo $edit_title; ?>"
-                              />
-                              <textarea
-                                  id="memo-content"
-                                  name="edit_content"
-                                  placeholder="内容を入力する..."
-                              ><?php echo $edit_content; ?></textarea>
-                          </form>
-                      <?php else: ?>
-                          <div class="mt-3 alert alert-info">
-                              <i class="fas fa-info-circle"></i>
-                              メモを新規作成するか選択してください。
-                          </div>
-                      <?php endif; ?>
-                </div>
-            </div>
+      <main class="dashboard">
+
+        <div class="main">
+
+          <aside class="aside">
+
+              <div class="header">
+                <p class="greeting">
+                  <?php echo $user_name; ?>さん、こんにちは。
+                </p>
+                <a href="./action/add.php" class="btn btn-action btn-add">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14"/><path d="M12 5v14"/>
+                  </svg>
+                </a>
+                <a href="./action/logout.php" class="btn btn-action btn-logout">
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                  </svg>
+                </a>
+              </div>
+
+              <h1 class="title">
+                  メモリスト
+              </h1>
+
+              <div class="memos">
+                <?php if (empty($memos)): ?>
+                  <p class="empty">メモがありません</p>
+                <?php endif; ?>
+
+                <?php foreach ($memos as $memo): ?>
+                  <a
+                  href="./action/select.php?id=<?php echo $memo["id"]; ?>"
+                  class="item <?php echo $edit_id == $memo["id"]
+                    ? "active"
+                    : ""; ?>"
+                  >
+                    <h5 class="title"><?php echo $memo["title"]; ?></h5>
+                    <date class="date">
+                      <?php echo date(
+                        "Y/m/d H:i",
+                        strtotime($memo["updated_at"]),
+                      ); ?>
+                    </date>
+                    <p class="content">
+                      <?php echo mb_strlen($memo["content"]) <= 100
+                        ? $memo["content"]
+                        : mb_substr($memo["content"], 0, 100) . "..."; ?>
+                    </p>
+                  </a>
+                <?php endforeach; ?>
+              </div>
+          </aside>
+
+          <div class="board">
+
+            <?php if (isset($_SESSION["select_memo"])): ?>
+
+              <form method="post" class="board-form">
+
+                  <button type="submit" class="btn btn-action save" formaction="./action/update.php">
+                    <span>Save</span>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+                      <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/>
+                      <path d="M7 3v4a1 1 0 0 0 1 1h7"/>
+                    </svg>
+                  </button>
+
+                  <input
+                    class="title"
+                    type="text"
+                    name="edit_title"
+                    placeholder="タイトルを入力する..."
+                    value="<?php echo $edit_title; ?>"
+                  />
+
+                  <textarea
+                    class="content"
+                    name="edit_content"
+                    placeholder="内容を入力する..."
+                  ><?php echo $edit_content; ?></textarea>
+
+                  <button type="submit" class="btn btn-action delete" formaction="./action/delete.php">
+                    <span>Delete</span>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M10 11v6"/>
+                      <path d="M14 11v6"/>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                      <path d="M3 6h18"/>
+                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                  </button>
+
+                  <input type="hidden" name="edit_id" value="<?php echo $edit_id; ?>" />
+
+              </form>
+              <?php else: ?>
+                <p class="empty">
+                    メモを新規作成するか選択してください。
+                </p>
+              <?php endif; ?>
+          </div>
+
         </div>
+
+      </main>
     </body>
 </html>
